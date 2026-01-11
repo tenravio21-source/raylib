@@ -34,24 +34,24 @@ void UpdatePlayer(Player *p, int screenWidth, int screenHeight, int spriteWidth,
 
   if (p->position.x < 0) {
     p->position.x = 0;
-    p->velocity.x = 0; // Stop horizontal momentum
+    p->velocity.x *= -0.5f;
   }
   // Right Wall (Screen Width - Sprite Width)
   if (p->position.x > screenWidth - spriteWidth) {
     p->position.x = screenWidth - spriteWidth;
-    p->velocity.x = 0;
+    p->velocity.x *= -0.5f;
   }
 
   // Top Wall
   if (p->position.y < 0) {
     p->position.y = 0;
-    p->velocity.y = 0; // Stop vertical momentum
+    p->velocity.y *= -0.5f; // Stop vertical momentum
   }
 
   // Bottom Wall (Screen Height - Sprite Height)
   if (p->position.y > screenHeight - spriteHeight) {
     p->position.y = screenHeight - spriteHeight;
-    p->velocity.y = 0;
+    p->velocity.y *= -0.5f;
   }
 }
 
@@ -60,8 +60,6 @@ int main(void) {
   const int screenHeight = 450;
 
   Player player = {.position = {400, 300}, .velocity = {0, 0}, .speed = 1.5f, .friction = 0.9f};
-
-  Vector2 input = {1.0f, 0.0f};
 
   InitWindow(screenWidth, screenHeight, "GIF Loading Example");
 
