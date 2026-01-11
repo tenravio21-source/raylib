@@ -4,15 +4,30 @@ int main(void) {
   const int screenWidth = 800;
   const int screenHeight = 450;
 
-  InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
+  InitWindow(screenWidth, screenHeight, "GIF Loading Example");
+  int animFrames = 0;
+  Image imNext = LoadImageAnim("assets/player.gif", &animFrames);
+  Texture2D texPlayer = LoadTextureFromImage(imNext);
+  int currentFrame = 0;
+  int frameDelay = 8;
+  int frameCounter = 0;
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
+    frameCounter++;
+    if (frameCounter >= frameDelay) {
+      currentFrame++;
+      if (currentFrame >= animFrames)
+        currentFrame = 0;
+      UpdateTexture(texPlayer, imNext.data + (currentFrame * imNext.width * imNext.height * 4));
+      frameCounter = 0;
+    }
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    DrawRectangle(200, 150, 400, 100, BLUE);
+    DrawTexture(texPlayer, 100, 100, WHITE);
     EndDrawing();
   }
+  UnloadTexture(texPlayer);
+  UnloadImage(imNext);
   CloseWindow();
   return 0;
 }
