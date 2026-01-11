@@ -4,7 +4,7 @@ CFLAGS = -Wall -std=c99 -Wno-missing-braces -I./raylib/include
 LDFLAGS = -L./raylib/lib -lraylib -lm -lpthread -ldl -lrt -lX11 -Wl,-rpath,./raylib/lib
 
 TARGET = basic_window
-SRC = main.c
+SRC = $(wildcard *.c)
 
 all: $(TARGET)
 
